@@ -1,0 +1,105 @@
+\section{Examples of dynamics on abelian varieties}
+
+On this section, fix an algebraically closed field \(\kkk\) of characteristic zero.
+Everything is defined over \(\kkk\) unless otherwise specified. 
+
+\subsection{Product of elliptic curves}
+
+    In this subsection, we consider the dynamics induced by matrices on the product of elliptic curves.
+
+    \begin{example}\label{eg:dynamics_induced_by_matrix_on_product_of_elliptic_curves}
+        Let \(E\) be an elliptic curve without complex multiplication. 
+        Consider the abelian variety \(X = E \times E\). 
+        Let \(f_A: X \to X\) be the endomorphism defined by the matrix
+        \[ A = \begin{pmatrix}
+            a & b \\
+            c & d
+        \end{pmatrix}. \]
+        Let \([F_1], [F_2], [\Delta]\) be the classes of the fibers of the two projections and the diagonal in \(\NS(X)\).
+        It is well-known that they span \(\NS(X)\) and the intersection numbers are given by
+        \[ [F_1]^2 = [F_2]^2 = [\Delta]^2 = 0, \quad [F_1] \cdot [F_2] = [F_1] \cdot [\Delta] = [F_2] \cdot [\Delta] = 1; \]
+        see \cite[Section 1.5.B]{Laz04a}.
+
+        We have that \(f_A^*[F_1]\) is given by \([a]_E (x) + [b]_E (y) = 0\).
+        Then 
+        \[ f_A^*[F_1].[F_1] = b^2, \quad f_A^*[F_1].[F_2] = a^2, \quad f_A^*[F_1].[\Delta] = (a+b)^2. \]
+        Hence 
+        \[ f_A^*[F_1] = (a^2+ab) [F_1] + (b^2+ab) [F_2] - ab [\Delta]. \]
+        Similarly, we have
+        \begin{align*}
+            f_A^*[F_2] &= (c^2+cd) [F_1] + (d^2+cd) [F_2] - cd [\Delta], \\
+            f_A^*[\Delta] &= (a-c)(a+b-c-d) [F_1] + (b-d)(a+b-c-d) [F_2] - (a-c)(b-d) [\Delta].
+        \end{align*}
+        Thus, the matrix representation of \(f_A^*\) on \(\NS(X)\) with respect to the basis \(\{[F_1], [F_2], [\Delta]\}\) is
+        \[
+            \begin{pmatrix}
+                a^2+ab & c^2+cd & (a-c)(a+b-c-d) \\
+                b^2+ab & d^2+cd & (b-d)(a+b-c-d) \\
+                -ab & -cd & -(a-c)(b-d)
+            \end{pmatrix}.
+        \]
+
+        If we take \(e_1= [F_1],e_2=[F_2],e_3=[\Delta]-[F_1]-[F_2]\) as a new basis of \(\NS(X)\), then the matrix representation of \(f_A^*\) on \(\NS(X)\) with respect to the basis \(\{e_1,e_2,e_3\}\) is
+        \[
+            M = \begin{pmatrix}
+                a^2 & c^2 & -2ac \\
+                b^2 & d^2 & -2bd \\
+                -ab & -cd & ad+bc
+            \end{pmatrix}.
+        \]
+        The characteristic polynomial of \(M\) is given by
+        \[ \chi_{f_A^*}(T) = (T - (ad-bc))(T^2 - (a^2+d^2+2bc)T + (ad-bc)^2). \]
+        Suppose that the eigenvalues of \(A\) are \(\lambda, \mu\).
+        Then the eigenvalues of \(f_A^*\) on \(\NS(X)\) are given by \(\lambda^2, \mu^2, \lambda \nu\).
+        When \(a-d,b,c\) are not all zero, \(\NS(X)\) has two invariant subspaces of dimension \(1\) and \(2\) respectively.
+        They are given by 
+        \[ V_1 = \bbQ \cdot \begin{pmatrix}
+            2c \\
+            -2b \\
+            a-d
+        \end{pmatrix}, \quad V_2 = \bbQ \cdot \begin{pmatrix}
+            0 \\
+            a-d \\
+            c
+        \end{pmatrix} \oplus \bbQ \cdot \begin{pmatrix}
+            d-a \\
+            0 \\
+            b
+        \end{pmatrix} \]
+        with respect to the basis \(\{e_i\}\).
+        One can use the code \cref{code:matrix_representation_of_dynamics_on_product_of_elliptic_curves} to check this in \href{https://sagecell.sagemath.org/}{SageMathCell}.
+        \Yang{To add envrionment for code. To change color of external links.}
+
+        With respect to the basis \(\{e_i\}\), the cones are given by
+        \[ \Nef(X) = \Psef(X) = \{p e_1 + q e_2 + r e_3 \mid p,q \geq 0, \quad pq \geq r^2\}. \]
+    \end{example}
+    
+
+    \subsection{Appendix}
+        \label{code:matrix_representation_of_dynamics_on_product_of_elliptic_curves}
+        \begin{verbatim}
+            a, b, c, d = var('a b c d')
+
+            M = matrix([[a^2, c^2, -2*a*c],
+                        [b^2, d^2, -2*b*d],
+                        [-a*b, -c*d, a*d+b*c]])
+
+            I = identity_matrix(3)
+            M1 = M - (a*d-b*c)*I
+            M2 = M^2 - (a^2+d^2+2*b*c)*M + (a*d-b*c)^2*I
+
+            v1 = vector([2*c, -2*b, a-d])
+            v2 = vector([0, a-d, c])
+            v3 = vector([d-a, 0, b])
+
+            print("M1 * v1 =")
+            print((M1 * v1).simplify_full())
+            print()
+            print("M2 * v2 =")
+            print((M2 * v2).simplify_full())
+            print()
+            print("M2 * v3 =")
+            print((M2 * v3).simplify_full())
+            print()
+        \end{verbatim}
+
