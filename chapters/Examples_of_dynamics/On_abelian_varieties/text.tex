@@ -65,41 +65,22 @@ Everything is defined over \(\kkk\) unless otherwise specified.
             d-a \\
             0 \\
             b
-        \end{pmatrix} \]
+        \end{pmatrix} = \{(p,q,r) \mid bp-cq+(a-d)r=0\}. \]
         with respect to the basis \(\{e_i\}\).
-        One can use the code \cref{code:matrix_representation_of_dynamics_on_product_of_elliptic_curves} to check this in \href{https://sagecell.sagemath.org/}{SageMathCell}.
-        \Yang{To add envrionment for code. To change color of external links.}
+        One can use \cref{code:matrix_representation_of_dynamics_on_product_of_elliptic_curves} to check this in \href{https://sagecell.sagemath.org/}{SageMathCell}.
 
         With respect to the basis \(\{e_i\}\), the cones are given by
         \[ \Nef(X) = \Psef(X) = \{p e_1 + q e_2 + r e_3 \mid p,q \geq 0, \quad pq \geq r^2\}. \]
+        By direct computation, one can check that \(V_2\) always intersects the interior of \(\Psef(X)\).
+
+        \begin{question}
+            Let \(X\) be a smooth projective variety of dimension \(n\) over \(\kkk\) and \(f: X \to X\) be a surjective endomorphism.
+            Is there always an \(f^*\)-invariant subspace of \(\NS(X)_\bbQ\) of dimension \(\leq n\) which intersects the interior of \(\Psef(X)\)?
+        \end{question}
     \end{example}
     
 
     \subsection{Appendix}
-        \label{code:matrix_representation_of_dynamics_on_product_of_elliptic_curves}
-        \begin{verbatim}
-            a, b, c, d = var('a b c d')
-
-            M = matrix([[a^2, c^2, -2*a*c],
-                        [b^2, d^2, -2*b*d],
-                        [-a*b, -c*d, a*d+b*c]])
-
-            I = identity_matrix(3)
-            M1 = M - (a*d-b*c)*I
-            M2 = M^2 - (a^2+d^2+2*b*c)*M + (a*d-b*c)^2*I
-
-            v1 = vector([2*c, -2*b, a-d])
-            v2 = vector([0, a-d, c])
-            v3 = vector([d-a, 0, b])
-
-            print("M1 * v1 =")
-            print((M1 * v1).simplify_full())
-            print()
-            print("M2 * v2 =")
-            print((M2 * v2).simplify_full())
-            print()
-            print("M2 * v3 =")
-            print((M2 * v3).simplify_full())
-            print()
-        \end{verbatim}
+        
+        \lstinputlisting[language=Python, caption={Test invariant subspaces of \(\NS(E\times E)\)}, label=code:matrix_representation_of_dynamics_on_product_of_elliptic_curves]{matrix_representation_of_dynamics_on_E_times_E.sage}
 
